@@ -1,0 +1,30 @@
+name: crud-flask
+
+services: 
+  bd:
+    image: postgres
+    container_name: bd-container
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123456789
+      POSTGRES_DB: crud_test
+    ports: 
+      - 6000:5432
+    networks:
+      - bd-network
+      - crud-network
+
+  crud:
+    build: .
+    image: flask-app
+    container_name: crud-container
+    ports:
+      - 5000:5000
+    networks:
+      - crud-network
+    depends_on:
+      - bd
+
+networks:
+  crud-network: {}
+  bd-network: {}

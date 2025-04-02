@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Notas</h1>
+
+        <!-- Formulario para agregar nueva nota -->
+        <form action="/add" method="POST" class="note-form">
+            <input type="text" name="title" placeholder="Título" required>
+            <textarea name="description" placeholder="Descripción" required></textarea>
+            <button type="submit">Agregar Nota</button>
+        </form>
+
+        <!-- Tabla de notas -->
+        <table class="note-table">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Descripción</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for note in notes %}
+                <tr>
+                    <td>{{ note.title }}</td>
+                    <td>{{ note.description }}</td>
+                    <td>
+                        <a href="/edit/{{ note.id }}" class="edit-btn">Editar</a>
+                        <a href="/delete/{{ note.id }}" class="delete-btn">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>
